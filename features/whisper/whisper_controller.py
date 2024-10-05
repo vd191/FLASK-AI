@@ -6,7 +6,9 @@ whisper_controller = Blueprint('whisper', __name__)
 @whisper_controller.route('/api/transcribe', methods=['POST'])
 def transcribe_audio():
     try:
-        text = transcribe.audio_to_text(request)
+        data = request.get_json()
+        audio = data['audio']
+        text = transcribe.audio_to_text(audio)
 
         if (text):
             return jsonify({"text": text}), 200
